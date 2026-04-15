@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>COAGRO — Arapiraca AgroShow 2026</title>
+
+<link rel="icon" type="image/svg+xml" href="https://www.grupocoagro.com/logos/Logo%20Coagro%20branco.svg">
+
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+
+--verde: #16a34a; --verde-escuro: #14532d; --verde-neon: #22c55e;
+
+--dark: #0a0f0a; --dark2: #111811; --dark3: #1a2e1a;
+
+--gold: #fbbf24; --white: #f0fdf4; --gray: #6b7280;
+
+}
+
+body { background: var(--dark); color: var(--white); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+/* HEADER */
+
+header { background: linear-gradient(135deg, #0a0f0a 0%, #14532d 50%, #0a0f0a 100%); border-bottom: 2px solid var(--verde-neon); padding: 20px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 30px rgba(34,197,94,0.3); }
+
+.header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+.logo-coagro { height: 60px; filter: drop-shadow(0 0 10px rgba(34,197,94,0.5)); }
+
+.logo-agroshow { height: 80px; width: 80px; border-radius: 50%; border: 3px solid var(--verde-neon); box-shadow: 0 0 20px rgba(34,197,94,0.6); object-fit: cover; }
+
+.header-title { flex: 1; text-align: center; }
+
+.header-title h1 { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--verde-neon); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 20px rgba(34,197,94,0.8); }
+
+.header-title p { color: var(--gold); font-size: 0.85rem; margin-top: 4px; }
+
+/* BADGE TIPO LOJA */
+
+.badge-tipo { background: linear-gradient(135deg, var(--verde), var(--verde-escuro)); color: white; text-align: center; padding: 8px; font-size: 0.8rem; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; border-bottom: 1px solid var(--verde-neon); }
+
+/* CONTADOR */
+
+.contador-section { background: linear-gradient(135deg, var(--dark2), var(--dark3)); border: 1px solid var(--verde); margin: 20px auto; max-width: 800px; border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 0 40px rgba(34,197,94,0.2); }
+
+.status-badge { display: inline-block; padding: 8px 24px; border-radius: 50px; font-weight: bold; font-size: 1rem; letter-spacing: 2px; margin-bottom: 16px; text-transform: uppercase; }
+
+.status-aguardando { background: rgba(251,191,36,0.2); color: var(--gold); border: 2px solid var(--gold); animation: pulse 2s infinite; }
+
+.status-ativo { background: rgba(34,197,94,0.2); color: var(--verde-neon); border: 2px solid var(--verde-neon); animation: pulse-green 1.5s infinite; }
+
+.status-encerrado { background: rgba(220,38,38,0.2); color: #ef4444; border: 2px solid #ef4444; }
+
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
+
+@keyframes pulse-green { 0%,100%{box-shadow:0 0 10px rgba(34,197,94,0.5);} 50%{box-shadow:0 0 25px rgba(34,197,94,1);} }
+
+.contador-label { color: var(--gray); font-size: 0.85rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
+.contador-boxes { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+.box-time { background: var(--dark); border: 2px solid var(--verde); border-radius: 12px; padding: 16px 20px; min-width: 80px; }
+
+.box-time span { display: block; font-size: 2.5rem; font-weight: 900; color: var(--verde-neon); line-height: 1; text-shadow: 0 0 15px rgba(34,197,94,0.8); }
+
+.box-time small { font-size: 0.65rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+
+.datas-info { margin-top: 16px; color: var(--gold); font-size: 0.9rem; font-weight: bold; }
+
+/* FILTROS */
+
+.filtros { max-width: 1200px; margin: 20px auto; padding: 0 16px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+.filtro-btn { background: var(--dark3); border: 1px solid var(--verde); color: var(--white); padding: 8px 18px; border-radius: 50px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s; }
+
+.filtro-btn:hover, .filtro-btn.active { background: var(--verde); color: white; box-shadow: 0 0 15px rgba(34,197,94,0.5); }
+
+/* GRID PRODUTOS */
+
+.produtos-grid { max-width: 1200px; margin: 20px auto; padding: 0 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+.categoria-titulo { grid-column: 1/-1; background: linear-gradient(135deg, var(--verde-escuro), var(--dark3)); border-left: 4px solid var(--verde-neon); padding: 12px 20px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; color: var(--verde-neon); text-transform: uppercase; letter-spacing: 2px; margin-top: 10px; }
+
+.produto-card { background: linear-gradient(145deg, var(--dark2), var(--dark3)); border: 1px solid rgba(34,197,94,0.3); border-radius: 12px; padding: 16px; transition: all 0.3s; position: relative; overflow: hidden; }
+
+.produto-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, transparent, var(--verde-neon), transparent); }
+
+.produto-card:hover { border-color: var(--verde-neon); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(34,197,94,0.3); }
+
+.produto-codigo { font-size: 0.7rem; color: var(--gray); margin-bottom: 6px; font-family: monospace; }
+
+.produto-nome { font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 12px; line-height: 1.4; min-height: 40px; }
+
+.preco-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+
+.preco-tabela { font-size: 0.8rem; color: var(--gray); text-decoration: line-through; }
+
+.preco-promo { font-size: 1.5rem; font-weight: 900; color: var(--verde-neon); text-shadow: 0 0 10px rgba(34,197,94,0.6); }
+
+.desconto-badge { background: var(--gold); color: #000; font-size: 0.7rem; font-weight: bold; padding: 2px 8px; border-radius: 50px; }
+
+.btn-whatsapp { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 12px; background: linear-gradient(135deg, #25d366, #128c7e); color: white; border: none; border-radius: 8px; padding: 10px; font-size: 0.85rem; font-weight: bold; cursor: pointer; text-decoration: none; transition: all 0.3s; }
+
+.btn-whatsapp:hover { transform: scale(1.03); box-shadow: 0 4px 15px rgba(37,211,102,0.5); }
+
+.btn-whatsapp svg { width: 18px; height: 18px; fill: white; }
+
+/* AVISO CORTEVA */
+
+.aviso-corteva { grid-column: 1/-1; background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05)); border: 1px solid var(--gold); border-radius: 10px; padding: 14px 20px; color: var(--gold); font-weight: bold; text-align: center; font-size: 0.9rem; }
+
+/* FOOTER */
+
+footer { text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid var(--verde-escuro); color: var(--gray); font-size: 0.8rem; }
+
+footer img { height: 40px; margin-bottom: 10px; opacity: 0.7; }
+
+/* RESPONSIVO */
+
+@media(max-width:600px){ .header-inner{flex-direction:column;} .logo-coagro{height:45px;} .logo-agroshow{height:65px;width:65px;} .box-time span{font-size:2rem;} .produtos-grid{grid-template-columns:1fr;} }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="badge-tipo">🏪 PREÇOS DE LOJA — VAREJO</div>
+
+<header>
+
+<div class="header-inner">
+
+<img src="https://www.grupocoagro.com/logos/Logo%20Coagro%20branco.svg" alt="COAGRO" class="logo-coagro">
+
+<div class="header-title">
+
+<h1>🌾 Arapiraca AgroShow 2026</h1>
+
+<p>16, 17 e 18 de Abril • Promoções Especiais COAGRO</p>
+
+</div>
+
+<img src="https://instagram.fapq6-1.fna.fbcdn.net/v/t51.82787-19/642107929_17849455302684907_1775476574783998711_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fapq6-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2gEnLgq05rM3UXbLtR9nFNy-MutxCK9JVgygFP0DWiAxpNW04MKlmLA7gMqlzwHTkoE&_nc_ohc=ZMUt4eCk7WoQ7kNvwEZV7bI&_nc_gid=B04mlur0DlYxDoXdtGzE_g&edm=APU89FABAAAA&ccb=7-5&oh=00_Af0yQiCCFyZ4UT4XCaaCIH8Ekr5E5wwLgvvyNKI6XDgxFA&oe=69E5A056&_nc_sid=bc0c2c" alt="Arapiraca AgroShow" class="logo-agroshow">
+
+</div>
+
+</header>
+
+<!-- CONTADOR -->
+
+<div class="contador-section" id="contadorSection">
+
+<div id="statusBadge" class="status-badge status-aguardando">⏳ AGUARDANDO INÍCIO</div>
+
+<div class="contador-label" id="contadorLabel">Promoção começa em:</div>
+
+<div class="contador-boxes" id="contadorBoxes">
+
+<div class="box-time"><span id="dias">00</span><small>Dias</small></div>
+
+<div class="box-time"><span id="horas">00</span><small>Horas</small></div>
+
+<div class="box-time"><span id="minutos">00</span><small>Min</small></div>
+
+<div class="box-time"><span id="segundos">00</span><small>Seg</small></div>
+
+</div>
+
+<div class="datas-info">📅 16/04/2026 (Qui) → 18/04/2026 (Sáb) até 23h</div>
+
+</div>
+
+<!-- FILTROS -->
+
+<div class="filtros">
+
+<button class="filtro-btn active" onclick="filtrar('todos')">🔍 Todos</button>
+
+<button class="filtro-btn" onclick="filtrar('defensivos')">🌿 Defensivos</button>
+
+<button class="filtro-btn" onclick="filtrar('sementes')">🌱 Sementes</button>
+
+<button class="filtro-btn" onclick="filtrar('medicamentos')">💊 Medicamentos</button>
+
+<button class="filtro-btn" onclick="filtrar('racoes')">🐾 Rações</button>
+
+<button class="filtro-btn" onclick="filtrar('tramontina')">🔧 Tramontina</button>
+
+</div>
+
+<!-- PRODUTOS -->
+
+<div class="produtos-grid" id="produtosGrid"></div>
+
+<footer>
+
+<img src="https://www.grupocoagro.com/logos/Logo%20Coagro%20branco.svg" alt="COAGRO"><br>
+
+<p>© 2026 Grupo COAGRO - DEPARTAMENTO DE COMPRAS/p>
+
+<p style="margin-top:6px;color:#22c55e;">Promoções válidas de 16 a 18 de Abril de 2026</p>
+
+</footer>
+
+<script>
+
+// ===== DADOS DOS PRODUTOS =====
+
+const produtos = [
+
+// DEFENSIVOS
+
+{cat:'defensivos', cod:'0007495', nome:'EVIDENCE WG70 IMIDACLOPRIDO 30GR', tabela:'R$ 16,90', promo:'R$ 13,50', desc:20},
+
+{cat:'defensivos', cod:'0000358', nome:'DECIS DELTAMETRINA 250ML', tabela:'R$ 29,90', promo:'R$ 24,90', desc:17},
+
+{cat:'defensivos', cod:'0000389', nome:'CONNECT SC112,5 IMIDACLOPRIDO 1LT', tabela:'R$ 55,90', promo:'R$ 55,50', desc:1},
+
+{cat:'defensivos', cod:'0000360', nome:'DECIS DELTAMETRINA 1LT', tabela:'R$ 109,90', promo:'R$ 90,00', desc:18},
+
+{cat:'defensivos', cod:'0000397', nome:'NATIVO SC300 TEBUCONAZOL 1LT', tabela:'R$ 107,90', promo:'R$ 93,90', desc:13},
+
+{cat:'defensivos', cod:'0000364', nome:'INFINITO BR FLUOPICOLIDA 1LT', tabela:'R$ 215,90', promo:'R$ 192,90', desc:11},
+
+{cat:'defensivos', cod:'0000395', nome:'CONNECT SC112,5 IMIDACLOPRIDO 5LT', tabela:'R$ 299,90', promo:'R$ 265,90', desc:11},
+
+{cat:'defensivos', cod:'0000390', nome:'NATIVO SC300 TEBUCONAZOL 5LT', tabela:'R$ 519,90', promo:'R$ 459,90', desc:12},
+
+{cat:'defensivos', cod:'0022000', nome:'GLIFOSATO 480SL 1LT CROTECT IMP', tabela:'R$ 34,90', promo:'R$ 26,90', desc:23},
+
+{cat:'defensivos', cod:'0021642', nome:'ATRAZINA 500SC 20LT CROTECT IMP', tabela:'R$ 459,90', promo:'R$ 425,90', desc:7},
+
+{cat:'defensivos', cod:'0022025', nome:'GLIFOSATO 720 WG 5KG CROTECT IMP', tabela:'R$ 199,90', promo:'R$ 185,90', desc:7},
+
+{cat:'defensivos', cod:'0022026', nome:'GLIFOSATO 480SL 20LT CROTECT IMP', tabela:'R$ 439,90', promo:'R$ 410,00', desc:7},
+
+{cat:'defensivos', cod:'0022190', nome:'GLUFOSINATO 200SL 20LT CROTECT IMP', tabela:'R$ 380,90', promo:'R$ 359,00', desc:6},
+
+{cat:'defensivos', cod:'0022027', nome:'GLIFOSATO 480SL 5LT CROTECT IMP', tabela:'R$ 380,00', promo:'R$ 359,00', desc:6},
+
+{cat:'defensivos', cod:'0022188', nome:'DIQUAT 200SL 20LT CROTECT IMP', tabela:'R$ 522,90', promo:'R$ 570,90', desc:0},
+
+// SEMENTES
+
+{cat:'sementes', cod:'0001188', nome:'SEM. CAPIM B. DECUMBENS PREMIER 10KG', tabela:'R$ 280,00', promo:'R$ 260,90', desc:7},
+
+{cat:'sementes', cod:'0008259', nome:'SEM. CAPIM P. MASSAI PREMIER 10KG', tabela:'R$ 229,90', promo:'R$ 199,90', desc:13},
+
+{cat:'sementes', cod:'0008258', nome:'SEM. CAPIM B. MG-5 XARAES PREMIER 10KG', tabela:'R$ 199,90', promo:'R$ 174,90', desc:13},
+
+{cat:'sementes', cod:'0018919', nome:'SEM. CAPIM B. RUZIZIENSIS PREMIER 10KG', tabela:'R$ 103,90', promo:'R$ 89,90', desc:13},
+
+{cat:'sementes', cod:'0000184', nome:'SEM. CAPIM B. MARANDU PREMIER 10KG', tabela:'R$ 199,90', promo:'R$ 174,90', desc:13},
+
+{cat:'sementes', cod:'0001192', nome:'SEM. CAPIM P. MOMBACA PREMIER 10KG', tabela:'R$ 196,90', promo:'R$ 171,90', desc:13},
+
+{cat:'sementes', cod:'0021681', nome:'SEM. CAPIM B. CAMELLO 8KG', tabela:'R$ 648,00', promo:'R$ 619,90', desc:4},
+
+{cat:'sementes', cod:'0021683', nome:'SEM. CAPIM B. CAYMAN 8KG', tabela:'R$ 803,00', promo:'R$ 720,00', desc:10},
+
+{cat:'sementes', cod:'0022936', nome:'SEM. CAPIM B. OKAPI 8KG', tabela:'R$ 711,90', promo:'R$ 640,00', desc:10},
+
+{cat:'sementes', cod:'0022937', nome:'SEM. CAPIM B. COBRA 2KG', tabela:'R$ 189,90', promo:'R$ 164,90', desc:13},
+
+// MEDICAMENTOS
+
+{cat:'medicamentos', cod:'0023127', nome:'PROTEINADO SECA 30', tabela:'R$ 83,90', promo:'R$ 79,90', desc:5},
+
+{cat:'medicamentos', cod:'0023118', nome:'PROTEINADO ENERGETICO TURBO', tabela:'R$ 79,90', promo:'R$ 75,90', desc:5},
+
+{cat:'medicamentos', cod:'0023128', nome:'BABY BEEEF FT', tabela:'R$ 169,90', promo:'R$ 159,90', desc:6},
+
+{cat:'medicamentos', cod:'0023119', nome:'NUCLEO PG 5 PRIME', tabela:'R$ 159,90', promo:'R$ 153,90', desc:4},
+
+{cat:'medicamentos', cod:'0023123', nome:'NUTRI-NUCLEO', tabela:'R$ 152,90', promo:'R$ 145,90', desc:5},
+
+{cat:'medicamentos', cod:'0023120', nome:'CONFINAMIX PG 30 PEL', tabela:'R$ 129,90', promo:'R$ 123,90', desc:5},
+
+{cat:'medicamentos', cod:'0023129', nome:'NUCLEO PG 5 P LM+', tabela:'R$ 210,90', promo:'R$ 199,90', desc:5},
+
+{cat:'medicamentos', cod:'0023124', nome:'CONFINAMIX PG 30 FAR', tabela:'R$ 152,90', promo:'R$ 145,90', desc:5},
+
+{cat:'medicamentos', cod:'0023125', nome:'FT-PHOS 40', tabela:'R$ 133,90', promo:'R$ 126,90', desc:5},
+
+{cat:'medicamentos', cod:'0023121', nome:'TURBO GEL EQUINOS', tabela:'R$ 114,90', promo:'R$ 108,90', desc:5},
+
+{cat:'medicamentos', cod:'0023122', nome:'MAXIMUS GEL 15P', tabela:'R$ 108,90', promo:'R$ 102,90', desc:6},
+
+{cat:'medicamentos', cod:'0023126', nome:'FT-PHOS BEZERROS', tabela:'R$ 121,90', promo:'R$ 114,90', desc:6},
+
+{cat:'medicamentos', cod:'0001081', nome:'MASTER IVERMECTINA LP INJ 1LT OURO FINO', tabela:'R$ 512,90', promo:'R$ 446,90', desc:13},
+
+{cat:'medicamentos', cod:'0001078', nome:'MASTER IVERMECTINA LP INJ 500ML', tabela:'R$ 303,90', promo:'R$ 252,90', desc:17},
+
+{cat:'medicamentos', cod:'0001044', nome:'CYPERMIL CIPERMETRINA POUR-ON 1LT', tabela:'R$ 34,90', promo:'R$ 29,90', desc:14},
+
+{cat:'medicamentos', cod:'0001007', nome:'COLOSSO CIPERMETRINA PULV 25ML', tabela:'R$ 8,50', promo:'R$ 7,25', desc:15},
+
+{cat:'medicamentos', cod:'0001085', nome:'MAXICAM MELOXICAM 2% INJ 50ML', tabela:'R$ 121,90', promo:'R$ 103,90', desc:15},
+
+{cat:'medicamentos', cod:'0001058', nome:'FLUATAC FLUAZURON DUO 1LT', tabela:'R$ 199,90', promo:'R$ 165,90', desc:17},
+
+{cat:'medicamentos', cod:'0001075', nome:'MASTER IVERMECTINA LP INJ 200ML', tabela:'R$ 208,90', promo:'R$ 179,90', desc:14},
+
+{cat:'medicamentos', cod:'0001006', nome:'COLOSSO CIPERMETRINA PULV 100ML', tabela:'R$ 25,90', promo:'R$ 21,90', desc:15},
+
+{cat:'medicamentos', cod:'0022016', nome:'IVER OF 50ML', tabela:'R$ 17,90', promo:'R$ 14,99', desc:16},
+
+{cat:'medicamentos', cod:'0010985', nome:'MATA BICHEIRA CLORPIRIFOS LEPECID 400ML', tabela:'R$ 14,25', promo:'R$ 11,90', desc:17},
+
+{cat:'medicamentos', cod:'0001005', nome:'COLOSSO CIPERMETRINA POUR-ON 1LT', tabela:'R$ 63,90', promo:'R$ 53,90', desc:16},
+
+{cat:'medicamentos', cod:'0001009', nome:'COLOSSO CIPERMETRINA PULV 1LT', tabela:'R$ 199,90', promo:'R$ 169,90', desc:15},
+
+{cat:'medicamentos', cod:'0000988', nome:'PENFORT PPU LA 50ML OURO FINO', tabela:'R$ 45,00', promo:'R$ 38,90', desc:14},
+
+{cat:'medicamentos', cod:'0001008', nome:'COLOSSO CIPERMETRINA PULV 250ML', tabela:'R$ 59,90', promo:'R$ 51,50', desc:14},
+
+{cat:'medicamentos', cod:'0001066', nome:'FLUATAC FLUAZURON DUO 5LT', tabela:'R$ 731,90', promo:'R$ 624,90', desc:15},
+
+{cat:'medicamentos', cod:'0001071', nome:'DICLOFENACO INJ 50ML OURO FINO', tabela:'R$ 33,50', promo:'R$ 27,90', desc:17},
+
+{cat:'medicamentos', cod:'0001012', nome:'COLOSSO CIPERMETRINA POUR-ON 2LT', tabela:'R$ 132,90', promo:'R$ 119,90', desc:10},
+
+{cat:'medicamentos', cod:'0001076', nome:'MASTER IVERMECTINA LP INJ 50ML', tabela:'R$ 47,90', promo:'R$ 39,90', desc:17},
+
+{cat:'medicamentos', cod:'0001040', nome:'IVERMECTINA 1% INJ 500ML OURO FINO', tabela:'R$ 96,90', promo:'R$ 81,90', desc:15},
+
+{cat:'medicamentos', cod:'0000085', nome:'ARAME MOTTO 500MT', tabela:'R$ 415,00', promo:'R$ 359,90', desc:13},
+
+{cat:'medicamentos', cod:'0000232', nome:'PULV PHJ 20LT JACTO', tabela:'R$ 499,90', promo:'R$ 421,90', desc:16},
+
+// RAÇÕES
+
+{cat:'racoes', cod:'0017691', nome:'PLANETA CAT MIX 25KG PROTEICA', tabela:'R$ 179,08', promo:'R$ 149,99', desc:16},
+
+{cat:'racoes', cod:'0018935', nome:'PLANETA CAT MIX 10.1KG PROTEICA', tabela:'R$ 87,60', promo:'R$ 66,90', desc:24},
+
+{cat:'racoes', cod:'0018857', nome:'PLANETA DOG CARNE ADULTO 15KG', tabela:'R$ 80,12', promo:'R$ 68,90', desc:14},
+
+{cat:'racoes', cod:'0017687', nome:'PLANETA DOG CARNE AD 25KG PROTEICA', tabela:'R$ 125,90', promo:'R$ 101,90', desc:19},
+
+{cat:'racoes', cod:'0018082', nome:'TUTTICANIS SELECT AD 23KG', tabela:'R$ 133,90', promo:'R$ 108,90', desc:19},
+
+{cat:'racoes', cod:'0018864', nome:'TUTTICATIS MIX C/CORANTES PREM 10.1KG', tabela:'R$ 74,90', promo:'R$ 65,90', desc:12},
+
+{cat:'racoes', cod:'0020430', nome:'TUTTICATIS MIX S/CORANTES PREM 10.1KG', tabela:'R$ 82,90', promo:'R$ 69,90', desc:16},
+
+// TRAMONTINA
+
+{cat:'tramontina', cod:'19239', nome:'MANGUEIRA JARDIM FLEX 200MT', tabela:'R$ 3,92', promo:'R$ 4,04', desc:0},
+
+{cat:'tramontina', cod:'14848', nome:'MANGUEIRA JARDIM FLEX ESP 200MT', tabela:'R$ 4,04', promo:'R$ 4,04', desc:0},
+
+{cat:'tramontina', cod:'12905', nome:'MANGUEIRA JARDIM FLEX ESP 100MT', tabela:'R$ 4,04', promo:'R$ 4,04', desc:0},
+
+{cat:'tramontina', cod:'570', nome:'FOICINHA C/ DENTE 77684/255', tabela:'R$ 21,84', promo:'R$ 21,99', desc:0},
+
+{cat:'tramontina', cod:'535', nome:'ENXADAO 2.0 FORJ LARGO 77270/204', tabela:'R$ 44,90', promo:'R$ 39,99', desc:11},
+
+{cat:'tramontina', cod:'465', nome:'PA QUADRADA 03 C/ CABO 71CM', tabela:'R$ 33,87', promo:'R$ 31,99', desc:6},
+
+{cat:'tramontina', cod:'14317', nome:'ENXADA LARGA 2,5 LEVE 77214/254', tabela:'R$ 34,36', promo:'R$ 33,99', desc:1},
+
+{cat:'tramontina', cod:'536', nome:'ENXADAO 2.0 FORJ ESTREITO 77272/204', tabela:'R$ 34,67', promo:'R$ 33,99', desc:2},
+
+{cat:'tramontina', cod:'500', nome:'ENXADAO 2,5 FORJ ESTREITO 77272/254', tabela:'R$ 38,17', promo:'R$ 34,99', desc:8},
+
+{cat:'tramontina', cod:'14330', nome:'ENXADA 2,0 LARGA 77214/204', tabela:'R$ 34,34', promo:'R$ 32,99', desc:4},
+
+{cat:'tramontina', cod:'499', nome:'ENXADAO 2,5 FORJ LARGO 77270/254', tabela:'R$ 37,09', promo:'R$ 34,99', desc:6},
+
+{cat:'tramontina', cod:'531', nome:'PICARETA CHIBANCA C/ CABO 77305/543', tabela:'R$ 86,20', promo:'R$ 79,99', desc:7},
+
+{cat:'tramontina', cod:'600', nome:'CAVADEIRA ARTIC 1,10CM 77559/524', tabela:'R$ 57,82', promo:'R$ 54,99', desc:5},
+
+{cat:'tramontina', cod:'630', nome:'CAVADEIRA ARTIC C/CABO 1,20CM 77562/803', tabela:'R$ 90,29', promo:'R$ 84,99', desc:6},
+
+{cat:'tramontina', cod:'601', nome:'CAVADEIRA ARTIC 1,20CM 77562/503', tabela:'R$ 74,29', promo:'R$ 69,99', desc:6},
+
+{cat:'tramontina', cod:'612', nome:'CAVADEIRA ARTIC 1,80CM 77571/803', tabela:'R$ 128,02', promo:'R$ 99,99', desc:22},
+
+{cat:'tramontina', cod:'610', nome:'FOICE ROCADEIRA 77600/115', tabela:'R$ 26,64', promo:'R$ 24,99', desc:6},
+
+{cat:'tramontina', cod:'533', nome:'PICARETA ESTREITA C/ CABO 77300/543', tabela:'R$ 90,55', promo:'R$ 79,99', desc:12}
+
+];
+
+const catLabels = {defensivos:'🌿 DEFENSIVOS', sementes:'🌱 SEMENTES', medicamentos:'💊 MEDICAMENTOS E NUTRIÇÃO', racoes:'🐾 RAÇÕES PROTEÍCA', tramontina:'🔧 TRAMONTINA'};
+
+const catOrder = ['defensivos','sementes','medicamentos','racoes','tramontina'];
+
+function gerarWhatsApp(nome, promo) {
+
+const msg = `Olá, passando pra te avisar que estamos na ARAPIRACA AGROSHOW e estamos com PROMOÇÕES em Nossas Lojas.%0A%0A*OLHE SÓ ESTE PRECINHO QUE O RICARDO FEZ*%0A%0A${encodeURIComponent(nome)} ${encodeURIComponent(promo)}, aproveite que é só até sábado.`;
+
+return `https://wa.me/?text=${msg}`;
+
+}
+
+let filtroAtual = 'todos';
+
+function filtrar(cat) {
+
+filtroAtual = cat;
+
+document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+
+event.target.classList.add('active');
+
+renderProdutos();
+
+}
+
+function renderProdutos() {
+
+const grid = document.getElementById('produtosGrid');
+
+grid.innerHTML = '';
+
+const cats = filtroAtual === 'todos' ? catOrder : [filtroAtual];
+
+cats.forEach(cat => {
+
+const lista = produtos.filter(p => p.cat === cat);
+
+if (!lista.length) return;
+
+grid.innerHTML += `<div class="categoria-titulo">${catLabels[cat]}</div>`;
+
+if (cat === 'defensivos') grid.innerHTML += `<div class="aviso-corteva">⭐ TODA LINHA DA CORTEVA EM ATÉ 3X NO CARTÃO</div>`;
+
+lista.forEach(p => {
+
+const descBadge = p.desc > 0 ? `<span class="desconto-badge">-${p.desc}%</span>` : '';
+
+grid.innerHTML += `
+
+<div class="produto-card">
+
+<div class="produto-codigo">${p.cod}</div>
+
+<div class="produto-nome">${p.nome}</div>
+
+<div class="preco-row">
+
+<span class="preco-tabela">De: ${p.tabela}</span>
+
+${descBadge}
+
+</div>
+
+<div class="preco-promo">Por: ${p.promo}</div>
+
+<a href="${gerarWhatsApp(p.nome, p.promo)}" target="_blank" class="btn-whatsapp">
+
+<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.853L.054 23.5l5.799-1.52A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.36-.213-3.44.902.919-3.352-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
+
+Enviar por WhatsApp
+
+</a>
+
+</div>`;
+
+});
+
+});
+
+}
+
+// ===== CONTADOR / STATUS =====
+
+const INICIO = new Date('2026-04-16T00:00:00');
+
+const FIM = new Date('2026-04-18T23:00:00');
+
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function atualizarContador() {
+
+const agora = new Date();
+
+const badge = document.getElementById('statusBadge');
+
+const label = document.getElementById('contadorLabel');
+
+const boxes = document.getElementById('contadorBoxes');
+
+if (agora < INICIO) {
+
+// Antes do início — conta regressiva para o início
+
+badge.className = 'status-badge status-aguardando';
+
+badge.textContent = '⏳ AGUARDANDO INÍCIO';
+
+label.textContent = 'Promoção começa em:';
+
+const diff = INICIO - agora;
+
+const d = Math.floor(diff/86400000);
+
+const h = Math.floor((diff%86400000)/3600000);
+
+const m = Math.floor((diff%3600000)/60000);
+
+const s = Math.floor((diff%60000)/1000);
+
+document.getElementById('dias').textContent = pad(d);
+
+document.getElementById('horas').textContent = pad(h);
+
+document.getElementById('minutos').textContent = pad(m);
+
+document.getElementById('segundos').textContent = pad(s);
+
+boxes.style.display = 'flex';
+
+} else if (agora >= INICIO && agora <= FIM) {
+
+// Durante a promoção — STATUS ATIVADO + conta regressiva para o fim
+
+badge.className = 'status-badge status-ativo';
+
+badge.textContent = '🟢 ATIVADO — PROMOÇÃO EM ANDAMENTO!';
+
+label.textContent = 'Promoção encerra em:';
+
+const diff = FIM - agora;
+
+const d = Math.floor(diff/86400000);
+
+const h = Math.floor((diff%86400000)/3600000);
+
+const m = Math.floor((diff%3600000)/60000);
+
+const s = Math.floor((diff%60000)/1000);
+
+document.getElementById('dias').textContent = pad(d);
+
+document.getElementById('horas').textContent = pad(h);
+
+document.getElementById('minutos').textContent = pad(m);
+
+document.getElementById('segundos').textContent = pad(s);
+
+boxes.style.display = 'flex';
+
+} else {
+
+// Após o encerramento
+
+badge.className = 'status-badge status-encerrado';
+
+badge.textContent = '🔴 CAMPANHA ENCERRADA';
+
+label.textContent = 'Esta promoção foi encerrada. Fique ligado nas próximas!';
+
+boxes.style.display = 'none';
+
+}
+
+}
+
+renderProdutos();
+
+atualizarContador();
+
+setInterval(atualizarContador, 1000);
+
+</script>
+
+</body>
+
+</html>
