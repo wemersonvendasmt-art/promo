@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ENCORTE 2026 – Coagro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:        #0d0f14;
+      --surface:   #151820;
+      --card:      #1c2030;
+      --border:    #2a2f42;
+      --accent:    #e8a020;
+      --accent2:   #c45c0a;
+      --green:     #22c55e;
+      --red:       #ef4444;
+      --text:      #f0f2f8;
+      --muted:     #8892aa;
+      --radius:    12px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+
+    /* ── HERO ── */
+    .hero{
+      background: linear-gradient(135deg,#0d0f14 0%,#1a1200 50%,#0d0f14 100%);
+      border-bottom:2px solid var(--accent);
+      padding:28px 20px 22px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(232,160,32,.18) 0%,transparent 70%);
+    }
+    .logos{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;margin-bottom:18px;position:relative}
+    .logo-coagro{height:48px;filter:drop-shadow(0 2px 8px rgba(232,160,32,.4))}
+    .logo-divider{width:2px;height:44px;background:var(--border);border-radius:2px}
+    .logo-encorte{height:56px;filter:drop-shadow(0 2px 12px rgba(196,92,10,.5))}
+    .hero-title{font-size:clamp(1.6rem,5vw,2.6rem);font-weight:900;letter-spacing:.04em;
+      background:linear-gradient(90deg,#f5c842,#e8a020,#c45c0a);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      position:relative}
+    .hero-sub{color:var(--muted);font-size:.9rem;margin-top:6px;position:relative}
+
+    /* ── COUNTDOWN ── */
+    .countdown-wrap{
+      background:linear-gradient(135deg,var(--surface),#1a1200);
+      border:1px solid var(--accent);
+      border-radius:var(--radius);
+      max-width:480px;margin:18px auto 0;padding:14px 20px;
+      display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+      position:relative;
+    }
+    .countdown-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;width:100%;text-align:center;margin-bottom:4px}
+    .cd-block{text-align:center;min-width:60px}
+    .cd-num{font-size:2rem;font-weight:900;color:var(--accent);line-height:1}
+    .cd-unit{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .cd-sep{font-size:1.6rem;font-weight:900;color:var(--border);align-self:flex-start;margin-top:4px}
+    .expired-badge{
+      background:var(--red);color:#fff;font-weight:700;font-size:.85rem;
+      padding:6px 16px;border-radius:20px;display:none;
+    }
+
+    /* ── PROMO BANNER ── */
+    .promo-banner{
+      background:linear-gradient(90deg,var(--accent2),var(--accent));
+      text-align:center;padding:8px 16px;font-weight:700;font-size:.85rem;
+      letter-spacing:.05em;color:#0d0f14;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar{
+      max-width:1200px;margin:24px auto 0;padding:0 16px;
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+    }
+    .filter-btn{
+      padding:7px 18px;border-radius:20px;border:1px solid var(--border);
+      background:var(--card);color:var(--muted);font-size:.82rem;font-weight:600;
+      cursor:pointer;transition:all .2s;
+    }
+    .filter-btn:hover,.filter-btn.active{
+      background:var(--accent);border-color:var(--accent);color:#0d0f14;
+    }
+    .search-input{
+      flex:1;min-width:200px;padding:8px 16px;border-radius:20px;
+      border:1px solid var(--border);background:var(--card);color:var(--text);
+      font-size:.85rem;outline:none;
+    }
+    .search-input::placeholder{color:var(--muted)}
+    .search-input:focus{border-color:var(--accent)}
+
+    /* ── GRID ── */
+    .section{max-width:1200px;margin:28px auto 0;padding:0 16px}
+    .section-title{
+      font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+      color:var(--accent);border-left:4px solid var(--accent);padding-left:12px;margin-bottom:16px;
+    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:32px}
+
+    /* ── CARD ── */
+    .card{
+      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+      padding:16px;display:flex;flex-direction:column;gap:10px;
+      transition:transform .2s,border-color .2s,box-shadow .2s;
+      position:relative;overflow:hidden;
+    }
+    .card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(232,160,32,.12)}
+    .card::before{
+      content:'OFERTA';position:absolute;top:10px;right:-20px;
+      background:var(--accent);color:#0d0f14;font-size:.6rem;font-weight:900;
+      padding:3px 28px;transform:rotate(35deg);letter-spacing:.08em;
+    }
+    .card-code{font-size:.7rem;color:var(--muted);font-family:monospace}
+    .card-name{font-size:.9rem;font-weight:600;line-height:1.35;color:var(--text)}
+    .prices{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+    .price-old{font-size:.85rem;color:var(--red);text-decoration:line-through;opacity:.8}
+    .price-new{font-size:1.4rem;font-weight:900;color:var(--green)}
+    .discount-badge{
+      background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);
+      color:var(--green);font-size:.72rem;font-weight:700;
+      padding:2px 8px;border-radius:10px;margin-left:auto;
+    }
+    .btn-wpp{
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      background:linear-gradient(135deg,#128c7e,#25d366);
+      color:#fff;font-weight:700;font-size:.82rem;
+      padding:9px 14px;border-radius:8px;border:none;cursor:pointer;
+      text-decoration:none;transition:opacity .2s;margin-top:auto;
+    }
+    .btn-wpp:hover{opacity:.88}
+    .btn-wpp svg{width:18px;height:18px;flex-shrink:0}
+
+    /* ── CORTEVA NOTE ── */
+    .note-box{
+      background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);
+      border-radius:var(--radius);padding:12px 16px;font-size:.82rem;color:var(--muted);
+      margin-bottom:24px;
+    }
+    .note-box strong{color:var(--accent)}
+
+    /* ── FOOTER ── */
+    footer{text-align:center;padding:28px 16px;color:var(--muted);font-size:.78rem;border-top:1px solid var(--border);margin-top:20px}
+
+    /* ── MOBILE ── */
+    @media(max-width:500px){
+      .cd-num{font-size:1.5rem}
+      .logo-coagro{height:36px}
+      .logo-encorte{height:42px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="logos">
+    <img src="https://www.grupocoagro.com/logos/Logo%20Coagro%20branco.svg" alt="Coagro" class="logo-coagro"/>
+    <div class="logo-divider"></div>
+    <img src="https://i.postimg.cc/VL8nTwy4/LOGO-ENCORTE-2.png" alt="Encorte" class="logo-encorte"/>
+  </div>
+  <h1 class="hero-title">ENCORTE 2026</h1>
+  <p class="hero-sub">Preços especiais por tempo limitado — aproveite agora!</p>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-wrap" id="countdownBox">
+    <div class="countdown-label">⏳ Promoção encerra em</div>
+    <div class="cd-block"><div class="cd-num" id="cd-d">--</div><div class="cd-unit">dias</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block"><div class="cd-num" id="cd-h">--</div><div class="cd-unit">horas</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block"><div class="cd-num" id="cd-m">--</div><div class="cd-unit">min</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-block"><div class="cd-num" id="cd-s">--</div><div class="cd-unit">seg</div></div>
+    <div class="expired-badge" id="expiredBadge">🔒 Promoção Encerrada</div>
+  </div>
+</header>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">🔥 TODA A LINHA CORTEVA EM ATÉ 5X NO CARTÃO &nbsp;|&nbsp; LINHA ZOETIS EM ATÉ 3X NO CARTÃO 🔥</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <input class="search-input" type="text" id="searchInput" placeholder="🔍 Buscar produto..."/>
+  <button class="filter-btn active" data-cat="all">Todos</button>
+  <button class="filter-btn" data-cat="defensivos">Defensivos</button>
+  <button class="filter-btn" data-cat="sementes">Sementes</button>
+  <button class="filter-btn" data-cat="pecuaria">Pecuária</button>
+</div>
+
+<!-- ══ DEFENSIVOS ══ -->
+<section class="section" data-section="defensivos">
+  <h2 class="section-title">🌿 Defensivos Agrícolas</h2>
+  <div class="grid" id="grid-defensivos"></div>
+</section>
+
+<!-- ══ SEMENTES ══ -->
+<section class="section" data-section="sementes">
+  <h2 class="section-title">🌱 Sementes</h2>
+  <div class="grid" id="grid-sementes"></div>
+</section>
+
+<!-- ══ PECUÁRIA ══ -->
+<section class="section" data-section="pecuaria">
+  <h2 class="section-title">🐄 Pecuária & Medicamentos</h2>
+  <div class="note-box">⚠️ <strong>Linha Zoetis:</strong> toda a linha em até 3× no cartão de crédito.</div>
+  <div class="grid" id="grid-pecuaria"></div>
+</section>
+
+<footer>
+  © 2026 Grupo Coagro · Campanha ENCORTE 2026 · Vigência: 23/04/2026 a 25/04/2026<br/>
+  Preços sujeitos a alteração sem aviso prévio. Consulte disponibilidade de estoque.
+</footer>
+
+<script>
+/* ════════════════════════════════════
+   DADOS DOS PRODUTOS
+════════════════════════════════════ */
+const products = {
+  defensivos: [
+    {code:"0022000",name:"GLIFOSATO 480SL 1LT CROTECT IMP",tab:34.90,promo:29.90},
+    {code:"0021642",name:"ATRAZINA 500SC 20LT CROTECT IMP",tab:459.90,promo:420.00},
+    {code:"0022026",name:"GLIFOSATO 480SL 20LT CROTECT IMP",tab:439.90,promo:339.00},
+    {code:"0022190",name:"GLUFOSINATO 200SL 20LT CROTECT IMP",tab:380.90,promo:359.00},
+    {code:"0022027",name:"GLIFOSATO 480SL 5LT CROTECT IMP",tab:149.90,promo:110.00},
+    {code:"0022188",name:"DIQUAT 200SL 20LT CROTECT IMP",tab:622.90,promo:570.90},
+  ],
+  sementes: [
+    {code:"0001188",name:"SEM. CAPIM B. DECUMBENS PREMIER 10KG",tab:280.00,promo:259.90},
+    {code:"0008258",name:"SEM. CAPIM B. MG-5 XARAES PREMIER 10KG",tab:199.90,promo:174.90},
+    {code:"0008259",name:"SEM. CAPIM B. MASSAI PREMIER 10KG",tab:229.90,promo:199.90},
+    {code:"0000184",name:"SEM. CAPIM B. MARANDU PREMIER 10KG",tab:199.90,promo:174.90},
+    {code:"0001192",name:"SEM. CAPIM P. MOMBACA PREMIER 10KG",tab:196.90,promo:171.90},
+    {code:"0021681",name:"SEM. CAPIM B. CAMELLO 8KG",tab:648.00,promo:615.90},
+    {code:"0021683",name:"SEM. CAPIM B. CAYMAN 8KG",tab:803.00,promo:710.00},
+    {code:"0022936",name:"SEM. CAPIM B. OKAPI 8KG",tab:711.90,promo:630.00},
+    {code:"0022937",name:"SEM. CAPIM B. COBRA 2KG",tab:189.90,promo:159.90},
+  ],
+  pecuaria: [
+    {code:"0001081",name:"MASTER IVERMECTINA LP INJ 1LT OURO FINO",tab:512.90,promo:446.90},
+    {code:"0001078",name:"MASTER IVERMECTINA LP INJ 500ML",tab:303.90,promo:252.90},
+    {code:"0001044",name:"CYPERMIL CIPERMETRINA POUR-ON 1LT OURO FINO",tab:34.90,promo:29.90},
+    {code:"0001007",name:"COLOSSO CIPERMETRINA PULV 25ML OURO FINO",tab:8.50,promo:7.25},
+    {code:"0001058",name:"FLUATAC FLUAZURON DUO 1LT OURO FINO",tab:199.90,promo:165.90},
+    {code:"0001075",name:"MASTER IVERMECTINA LP INJ 200ML OURO FINO",tab:208.90,promo:179.90},
+    {code:"0001006",name:"COLOSSO CIPERMETRINA PULV 100ML OURO FINO",tab:25.90,promo:21.90},
+    {code:"0010985",name:"MATA BICHEIRA CLORPIRIFOS LEPECID 400ML",tab:14.25,promo:11.90},
+    {code:"0001005",name:"COLOSSO CIPERMETRINA POUR-ON 1LT",tab:63.90,promo:53.90},
+    {code:"0001009",name:"COLOSSO CIPERMETRINA PULV 1LT OURO FINO",tab:199.90,promo:169.90},
+    {code:"0001008",name:"COLOSSO CIPERMETRINA PULV 250ML OURO FINO",tab:59.90,promo:51.50},
+    {code:"0001066",name:"FLUATAC FLUAZURON DUO 5LT OURO FINO",tab:731.90,promo:624.90},
+    {code:"0001012",name:"COLOSSO CIPERMETRINA POUR-ON 2LT OURO FINO",tab:132.90,promo:119.90},
+    {code:"0001076",name:"MASTER IVERMECTINA LP INJ 50ML OURO FINO",tab:47.90,promo:39.90},
+    {code:"0000354",name:"TERRAMICINA OXITETRACICLINA LA 20ML",tab:15.65,promo:12.90},
+    {code:"0000355",name:"MATA BICHEIRA FORT DODGE 500ML ZOETIS",tab:13.60,promo:11.90},
+    {code:"0001180",name:"TERRAMICINA OXITETRACICLINA LA 50ML",tab:31.50,promo:25.90},
+    {code:"0000357",name:"DECTOMAX DORAMECTINA INJ 50ML ZOETIS",tab:34.60,promo:29.90},
+    {code:"0001179",name:"TERRACORTRIL OXITETRACICLINA SPRAY 125ML",tab:39.90,promo:34.90},
+    {code:"0001197",name:"DECTOMAX DORAMECTIN INJ 500ML ZOETIS",tab:334.90,promo:297.90},
+    {code:"0001182",name:"TERRAMICINA OXITETRACICLINA LA 100ML ZOETIS",tab:52.50,promo:46.90},
+    {code:"0001281",name:"TERRAMICINA OXITETRACICLINA MAIS 50ML ZOETIS",tab:37.90,promo:33.90},
+    {code:"0001167",name:"BRINCO INSET NEOCIDOL B40 C/10 VALLEE",tab:50.90,promo:43.90},
+    {code:"0001060",name:"BRINCO MOSQ NA MOSCA 40% DIAZINON C/10",tab:94.90,promo:79.90},
+    {code:"0001284",name:"BRINCO INSET TOPTAG C/10UN ZOETIS",tab:68.90,promo:59.90},
+    {code:"0000085",name:"ARAME MOTTO 500MT",tab:415.00,promo:359.90},
+    {code:"0000232",name:"PULV PHJ 20LT JACTO",tab:499.90,promo:421.90},
+    {code:"0001065",name:"SINCROCIO CLOPROSTENOL 4ML OURO FINO",tab:39.90,promo:34.00},
+    {code:"0001187",name:"GONADIOL BENZOATO DE ESTRADIOL 100ML ZOETIS",tab:48.50,promo:37.90},
+    {code:"0001063",name:"SINCRODIOL BENZOATO DE ESTRADIOL INJ 50ML",tab:18.90,promo:15.90},
+    {code:"0010481",name:"DIB 0,5 INTRAVAGINAL BOVINO C/10 DISPOSITIVOS",tab:158.90,promo:138.90},
+    {code:"0001186",name:"ECP CIPIONATO DE ESTRADIOL 10ML ZOETIS",tab:28.50,promo:23.50},
+    {code:"0001183",name:"LUTALYSE DINOPROST TROMETAMINA 30ML ZOETIS",tab:64.50,promo:49.90},
+    {code:"0008105",name:"NOVORMON GONADOTROFINA 100ML ZOETIS",tab:834.90,promo:732.90},
+    {code:"0007429",name:"CYDECTIN DORAMECTIN 500ML",tab:471.90,promo:409.90},
+  ]
+};
+
+/* ════════════════════════════════════
+   FORMATA MOEDA
+════════════════════════════════════ */
+const fmt = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+/* ════════════════════════════════════
+   DESCONTO %
+════════════════════════════════════ */
+const disc = (tab,promo) => Math.round((1 - promo/tab)*100);
+
+/* ════════════════════════════════════
+   MENSAGEM WHATSAPP
+════════════════════════════════════ */
+function wppMsg(name,tab,promo){
+  const msg =
+    `Olá, passando aqui para lhe avisar que estamos na ENCORTE 2026 e preparamos *PREÇOS ESPECIAIS*\n` +
+    `Olhe só isto viu: *${name}*, de ${fmt(tab)} POR ${fmt(promo)}.\n` +
+    `Vai perder ou vai aproveitar?`;
+  return `https://wa.me/?text=${encodeURIComponent(msg)}`;
+}
+
+/* ════════════════════════════════════
+   RENDERIZA CARDS
+════════════════════════════════════ */
+function renderGrid(cat, filter=''){
+  const grid = document.getElementById(`grid-${cat}`);
+  const items = products[cat].filter(p =>
+    p.name.toLowerCase().includes(filter.toLowerCase()) ||
+    p.code.includes(filter)
+  );
+  grid.innerHTML = items.map(p => {
+    const d = disc(p.tab, p.promo);
+    return `
+    <div class="card" data-cat="${cat}" data-name="${p.name.toLowerCase()}">
+      <div class="card-code">${p.code}</div>
+      <div class="card-name">${p.name}</div>
+      <div class="prices">
+        <span class="price-old">${fmt(p.tab)}</span>
+        <span class="price-new">${fmt(p.promo)}</span>
+        <span class="discount-badge">-${d}%</span>
+      </div>
+      <a class="btn-wpp" href="${wppMsg(p.name,p.tab,p.promo)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar pelo WhatsApp
+      </a>
+    </div>`;
+  }).join('');
+}
+
+function renderAll(filter=''){
+  ['defensivos','sementes','pecuaria'].forEach(c => renderGrid(c, filter));
+  // mostra/oculta seções
+  document.querySelectorAll('[data-section]').forEach(sec => {
+    const cat = sec.dataset.section;
+    const hasItems = products[cat].some(p =>
+      p.name.toLowerCase().includes(filter.toLowerCase()) || p.code.includes(filter)
+    );
+    sec.style.display = hasItems ? '' : 'none';
+  });
+}
+
+renderAll();
+
+/* ════════════════════════════════════
+   FILTRO POR CATEGORIA
+════════════════════════════════════ */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    document.querySelectorAll('[data-section]').forEach(sec => {
+      sec.style.display = (cat === 'all' || sec.dataset.section === cat) ? '' : 'none';
+    });
+  });
+});
+
+/* ════════════════════════════════════
+   BUSCA
+════════════════════════════════════ */
+document.getElementById('searchInput').addEventListener('input', e => {
+  const v = e.target.value.trim();
+  renderAll(v);
+  // reset filtro visual
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-cat="all"]').classList.add('active');
+});
+
+/* ════════════════════════════════════
+   COUNTDOWN
+   Vigência: 23/04/2026 00:00 → 25/04/2026 23:59:59
+════════════════════════════════════ */
+const END_DATE = new Date('2026-04-25T23:59:59');
+
+function updateCountdown(){
+  const now  = new Date();
+  const diff = END_DATE - now;
+
+  if(diff <= 0){
+    document.getElementById('expiredBadge').style.display = 'inline-block';
+    ['cd-d','cd-h','cd-m','cd-s'].forEach(id => document.getElementById(id).textContent = '00');
+    return;
+  }
+
+  const days  = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins  = Math.floor((diff % 3600000)  / 60000);
+  const secs  = Math.floor((diff % 60000)    / 1000);
+
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('cd-d').textContent = pad(days);
+  document.getElementById('cd-h').textContent = pad(hours);
+  document.getElementById('cd-m').textContent = pad(mins);
+  document.getElementById('cd-s').textContent = pad(secs);
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
