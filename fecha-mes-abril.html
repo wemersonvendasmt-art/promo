@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>COAGRO • FECHA MÊS</title>
+
+  <!-- Favicon (logo Coagro) -->
+  <link rel="icon" type="image/svg+xml" href="https://www.grupocoagro.com/logos/Logo%20Coagro%20branco.svg" />
+
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.085);
+      --border: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+
+      /* “cores de logo” (aprox) */
+      --brand: #00b16a;        /* verde */
+      --brand2: #00d084;       /* verde claro */
+      --danger: #ff4d4d;
+      --warn: #ffcc66;
+      --ok: #35d07f;
+
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", "Noto Sans", "Liberation Sans", sans-serif;
+      background:
+        radial-gradient(1000px 600px at 20% 0%, rgba(0,177,106,.20), transparent 60%),
+        radial-gradient(900px 550px at 100% 10%, rgba(0,208,132,.12), transparent 55%),
+        radial-gradient(900px 550px at 40% 100%, rgba(255,204,102,.10), transparent 60%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    a{color:inherit}
+    .container{max-width:1200px;margin:0 auto;padding:18px 16px 70px}
+
+    /* Topbar */
+    .topbar{
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(11,15,20,.92), rgba(11,15,20,.72));
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner{
+      max-width:1200px;margin:0 auto;padding:14px 16px;
+      display:flex;gap:14px;align-items:center;justify-content:space-between;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;min-width:280px;
+    }
+    .brand .logo{
+      width:140px;height:auto;display:block;
+      filter: drop-shadow(0 10px 25px rgba(0,0,0,.35));
+    }
+    .brand .promo{
+      width:64px;height:64px;object-fit:contain;
+      filter: drop-shadow(0 12px 30px rgba(0,0,0,.55));
+    }
+
+    .statusBox{
+      display:flex;align-items:center;gap:10px;justify-content:flex-end;
+      padding:10px 12px;border-radius:14px;background:var(--panel);
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+      min-width: 380px;
+    }
+    .statusPill{
+      font-weight:800;letter-spacing:.6px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      text-transform: uppercase;
+      white-space:nowrap;
+    }
+    .pill-live{border-color: rgba(53,208,127,.45); background: rgba(53,208,127,.14)}
+    .pill-soon{border-color: rgba(255,204,102,.45); background: rgba(255,204,102,.14)}
+    .pill-end{border-color: rgba(255,77,77,.45); background: rgba(255,77,77,.14)}
+
+    .countdown{
+      display:flex;flex-direction:column;gap:4px;
+      min-width: 210px;
+    }
+    .countdown .label{font-size:12px;color:var(--muted)}
+    .countdown .time{
+      font-size:16px;font-weight:800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Hero */
+    .hero{
+      margin:18px 0 14px;
+      padding:18px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute;inset:-2px;
+      background: radial-gradient(900px 260px at 20% 0%, rgba(0,208,132,.16), transparent 60%),
+                  radial-gradient(900px 260px at 80% 100%, rgba(0,177,106,.12), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-inner{position:relative;display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    .hero h1{margin:0;font-size:22px;letter-spacing:.2px}
+    .hero p{margin:0;color:var(--muted)}
+    .chips{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      padding:8px 10px;border-radius:999px;
+      font-size:12px;color: rgba(255,255,255,.78);
+    }
+
+    /* Filters */
+    .filters{
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+      padding:14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .filters .group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .filters input, .filters select{
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding:10px 12px;
+      outline:none;
+      min-width: 220px;
+    }
+    .filters select{min-width: 160px}
+    .btn{
+      cursor:pointer;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+    .btn:hover{background: rgba(255,255,255,.10)}
+    .btn.active{
+      border-color: rgba(0,208,132,.55);
+      background: rgba(0,208,132,.12);
+    }
+
+    /* Grid */
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .card{
+      grid-column: span 4;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      min-height: 210px;
+    }
+    @media (max-width: 980px){ .card{grid-column: span 6;} .statusBox{min-width: 320px} .brand{min-width: 220px}}
+    @media (max-width: 640px){ .card{grid-column: span 12;} .statusBox{min-width: 100%} .brand{min-width: 100%} .topbar-inner{flex-wrap:wrap} }
+
+    .card-header{
+      padding:14px 14px 0;
+      display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
+    }
+    .badges{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{
+      font-size:11px;
+      padding:6px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.78);
+      white-space:nowrap;
+    }
+    .badge-dept{border-color: rgba(0,208,132,.35); background: rgba(0,208,132,.10)}
+    .badge-pay{border-color: rgba(255,204,102,.35); background: rgba(255,204,102,.10)}
+    .badge-discount{border-color: rgba(53,208,127,.35); background: rgba(53,208,127,.10)}
+    .code{
+      font-size:12px;
+      color: var(--muted);
+      text-align:right;
+      white-space:nowrap;
+    }
+    .card-body{padding:10px 14px 14px}
+    .title{
+      margin: 6px 0 10px;
+      font-size: 14px;
+      line-height: 1.25rem;
+      font-weight: 850;
+      letter-spacing:.2px;
+    }
+    .prices{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .priceDe{
+      color: rgba(255,255,255,.60);
+      text-decoration: line-through;
+      font-size: 13px;
+    }
+    .pricePor{
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing:.3px;
+    }
+    .meta{
+      margin-top:10px;
+      display:flex;gap:10px;flex-wrap:wrap;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+    }
+    .meta .dot{opacity:.55}
+
+    .card-actions{
+      display:flex;gap:10px;flex-wrap:wrap;
+      padding:0 14px 14px;
+    }
+    .wa{
+      display:inline-flex;align-items:center;gap:10px;
+      background: linear-gradient(135deg, rgba(0,208,132,.22), rgba(0,177,106,.12));
+      border:1px solid rgba(0,208,132,.45);
+      color: rgba(255,255,255,.95);
+      padding:10px 12px;
+      border-radius: 14px;
+      text-decoration:none;
+      font-weight:900;
+      flex:1;
+      justify-content:center;
+    }
+    .wa:hover{filter: brightness(1.06)}
+    .copy{
+      flex:0 0 auto;
+      min-width: 130px;
+    }
+
+    /* Floating WhatsApp */
+    .floatWA{
+      position:fixed; right:16px; bottom:16px;
+      z-index:60;
+      border-radius:999px;
+      padding:12px 14px;
+      border:1px solid rgba(0,208,132,.45);
+      background: rgba(0,208,132,.12);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      display:flex;align-items:center;gap:10px;
+      text-decoration:none;
+      font-weight:900;
+    }
+
+    .footerNote{
+      margin-top:14px;
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
+      padding: 12px 2px;
+    }
+    .muted{color:var(--muted)}
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img class="promo" alt="Fechamês" src="https://i.postimg.cc/YSBZTMMg/SELO-3D.png" />
+        <img class="logo" alt="COAGRO" src="https://www.grupocoagro.com/logos/Logo%20Coagro%20branco.svg" />
+      </div>
+
+      <div class="statusBox">
+        <span id="statusPill" class="statusPill pill-soon">EM BREVE</span>
+        <div class="countdown">
+          <div id="countdownLabel" class="label">Contagem para iniciar</div>
+          <div id="countdownTime" class="time">--d --:--:--</div>
+        </div>
+        <button id="btnScroll" class="btn" title="Ver promoções">Ver ofertas</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div>
+          <h1>Fechamês COAGRO • ARAPIRACA AGROSHOW</h1>
+          <p>Promoções válidas de <b>28/04/2026</b> até <b>30/04/2026</b>. Aproveite enquanto dura.</p>
+        </div>
+        <div class="chips">
+          <span class="chip">Layout dark • identidade COAGRO</span>
+          <span class="chip">Filtro por departamento</span>
+          <span class="chip">Botão WhatsApp por item</span>
+          <span class="chip">Busca + ordenação</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="filters" id="filters">
+      <div class="group" style="flex: 1 1 340px;">
+        <input id="q" type="search" placeholder="Buscar por código ou descrição…" />
+      </div>
+
+      <div class="group" aria-label="Departamentos">
+        <button class="btn active" data-dept="TODOS">Todos</button>
+        <button class="btn" data-dept="PET">PET</button>
+        <button class="btn" data-dept="AGRO">AGRO</button>
+        <button class="btn" data-dept="CASA E JARDIM">CASA E JARDIM</button>
+        <button class="btn" data-dept="MAQUINAS E EQUIPAMENTOS">MAQUINAS E EQUIPAMENTOS</button>
+        <button class="btn" data-dept="PECUÁRIA">PECUÁRIA</button>
+      </div>
+
+      <div class="group">
+        <select id="pay">
+          <option value="TODOS">Pagamento (todos)</option>
+          <option value="1X">1x</option>
+          <option value="3X">3x</option>
+        </select>
+
+        <select id="sort">
+          <option value="relevancia">Ordenar: relevância</option>
+          <option value="maior_desconto">Maior desconto</option>
+          <option value="menor_preco">Menor preço (Por)</option>
+          <option value="maior_preco">Maior preço (Por)</option>
+        </select>
+
+        <button id="clear" class="btn">Limpar</button>
+      </div>
+    </section>
+
+    <section class="grid" id="grid" aria-live="polite"></section>
+
+    <div class="footerNote">
+      <div><b class="muted">Observação:</b> “Margem” só aparece quando estava informada na planilha (imagem 2).</div>
+    </div>
+  </main>
+
+  <a id="floatWA" class="floatWA" target="_blank" rel="noopener" href="#">
+    WhatsApp • mensagem geral
+  </a>
+
+<script>
+  // =========================
+  // Configuração da campanha
+  // =========================
+  const TIMEZONE = "America/Maceio"; // ajuste se necessário
+  const CAMPAIGN_START = "2026-04-28T00:00:00";
+  const CAMPAIGN_END   = "2026-04-30T23:59:59";
+
+  function nowInTZ(tz){
+    // cria uma Date baseada na string local daquele timezone
+    return new Date(new Date().toLocaleString("en-US", { timeZone: tz }));
+  }
+  function parseInTZ(isoLike, tz){
+    // interpreta "YYYY-MM-DDTHH:mm:ss" como hora local do timezone
+    // (truque: cria Date usando o mesmo TZ do navegador via string)
+    const parts = isoLike.replace("T"," ").split(/[- :]/).map(Number);
+    const [Y,M,D,h,m,s] = parts;
+    // monta uma data "naive" e depois pega equivalente do TZ via toLocaleString
+    const naive = new Date(Y, M-1, D, h, m, s || 0);
+    // reancora no TZ:
+    return new Date(naive.toLocaleString("en-US", { timeZone: tz }));
+  }
+
+  const startAt = parseInTZ(CAMPAIGN_START, TIMEZONE);
+  const endAt = parseInTZ(CAMPAIGN_END, TIMEZONE);
+
+  // =========================
+  // Dados (extraídos das imagens)
+  // =========================
+  const products = [
+    // Imagem 1 (Tramontina) - dept sugerido: CASA E JARDIM
+    { code:"19239", name:"MANGUEIRA JARDIM FLEX 200MT 79165/520", dept:"CASA E JARDIM", de:4.04, por:3.92, margin:null, pay:"1X" },
+    { code:"14848", name:"MANGUEIRA JARDIM FLEX ESP 200MT 79170/520", dept:"CASA E JARDIM", de:4.04, por:4.04, margin:null, pay:"1X" },
+    { code:"12905", name:"MANGUEIRA JARDIM FLEX ESP 100MT 79170/510", dept:"CASA E JARDIM", de:4.04, por:4.04, margin:null, pay:"1X" },
+    { code:"570", name:"FOICINHA C/ DENTE 77684/255 (TRAMONTINA)", dept:"CASA E JARDIM", de:21.99, por:21.84, margin:null, pay:"1X" },
+    { code:"535", name:"ENXADÃO 2.0 FORJ LARGO 77270/204 (TRAMONTINA)", dept:"CASA E JARDIM", de:44.90, por:39.99, margin
